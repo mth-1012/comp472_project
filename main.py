@@ -1,12 +1,11 @@
 from torch.utils.data import DataLoader
+from PIL import Image
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 import torchvision
 import matplotlib.pyplot as plt
-import CNN as cnnModule
-from PIL import Image
-import torchvision.transforms.functional as TF
+import CNN as CNN
 
 
 def show_batch(data_loader):
@@ -34,6 +33,16 @@ def model_evaluate(model, test_loader):
 
 def model_save(model):
     torch.save(model.state_dict(), 'model.pt')
+
+
+def model_evaluate_single(model, image_dir):
+    single = Image.open(image_dir).convert('RGB')
+    input = transform(single)
+    input = input.unsqueeze(0)
+    input = input.to(device)
+    output = model(input)
+    _, predicted = torch.max(output.data, 1)
+    print(predicted)
 
 
 # Press the green button in the gutter to run the script.
@@ -68,7 +77,7 @@ if __name__ == '__main__':
     # show_batch(test_loader)
 
     """Model instance, loss function and optimizer"""
-    model = cnnModule.CNN()
+    model = CNN.CNN()
     model.to(device)
 
     criterion = nn.CrossEntropyLoss()
@@ -102,11 +111,4 @@ if __name__ == '__main__':
     model_evaluate(model, test_loader)
 
     """Single image evaluation"""
-    image = Image.open('./data/predict/img.png').convert('RGB')
-    x = transform(image)
-    x = x.unsqueeze(0)
-    x = x.to(device)
-    print(x.shape)
-    output = model(x)
-    _, predicted = torch.max(output.data, 1)
-    print(predicted)
+    model_evaluate_single(model, './data/predict/img.png')
