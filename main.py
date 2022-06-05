@@ -42,7 +42,8 @@ def model_evaluate_single(model, image_dir):
     input = input.to(device)
     output = model(input)
     _, predicted = torch.max(output.data, 1)
-    print(predicted)
+    result = predicted[0].item()
+    print(result)
 
 
 # Press the green button in the gutter to run the script.
@@ -61,7 +62,6 @@ if __name__ == '__main__':
             # transforms.Normalize((0.25,0.25,0.25), (0.25,0.25,0.25)),
             transforms.CenterCrop(200),
             transforms.Resize(256)
-
         ])
 
     train_dataset = torchvision.datasets.ImageFolder(root='./data/train/', transform=transform)
@@ -103,6 +103,8 @@ if __name__ == '__main__':
             _, predicted = torch.max(outputs.data, 1)
             correct = (predicted == labels).sum().item()
             acc_list.append(correct / total)
+            if loss.item() != 0:
+                print(labels)
             if (i + 1) % 100 == 0:
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}, Accuracy: {:.2f}%'
                       .format(epoch + 1, num_epochs, i + 1, total_step, loss.item(), (correct / total) * 100))
@@ -111,4 +113,4 @@ if __name__ == '__main__':
     model_evaluate(model, test_loader)
 
     """Single image evaluation"""
-    model_evaluate_single(model, './data/predict/img.png')
+    model_evaluate_single(model, './data/predict/img.jpg')
