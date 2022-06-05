@@ -24,7 +24,7 @@ class CNN(nn.Module):
         )
         self.fc_layer = nn.Sequential(
             nn.Dropout(p=0.1),
-            nn.Linear(262144, 1000),
+            nn.Linear(4096, 1000),
             nn.ReLU(inplace=True),
             nn.Linear(1000, 512),
             nn.ReLU(inplace=True),

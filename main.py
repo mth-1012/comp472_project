@@ -17,6 +17,7 @@ def show_batch(data_loader):
 
 
 def model_evaluate(model, test_loader):
+    print('==== evaluate ====')
     model.eval()
     with torch.no_grad():
         correct = 0
@@ -27,6 +28,7 @@ def model_evaluate(model, test_loader):
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
+            print('Highest chance to be: ', classes[predicted[0].item()])
         print('Test Accuracy of the model on the {} test images: {} %'
               .format(total, (correct / total) * 100))
 
@@ -36,14 +38,14 @@ def model_save(model):
 
 
 def model_evaluate_single(model, image_dir):
+    print('==== single evaluate ====')
     single = Image.open(image_dir).convert('RGB')
     input = transform(single)
     input = input.unsqueeze(0)
     input = input.to(device)
     output = model(input)
     _, predicted = torch.max(output.data, 1)
-    result = predicted[0].item()
-    print(result)
+    print('Highest chance to be: ', classes[predicted[0].item()])
 
 
 # Press the green button in the gutter to run the script.
@@ -52,22 +54,26 @@ if __name__ == '__main__':
     print('AI Face Mask Detector')
 
     """Load dataset"""
-    num_epochs = 4
+    num_epochs = 10
     num_classes = 4
     learning_rate = 0.001
 
     transform = transforms.Compose(
         [
             transforms.ToTensor(),
-            # transforms.Normalize((0.25,0.25,0.25), (0.25,0.25,0.25)),
-            transforms.CenterCrop(200),
-            transforms.Resize(256)
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            transforms.Resize(32),
+            transforms.CenterCrop(32),
         ])
 
     train_dataset = torchvision.datasets.ImageFolder(root='./data/train/', transform=transform)
-    train_loader = torch.utils.data.DataLoader(train_dataset)
+    train_loader = torch.utils.data.DataLoader(train_dataset, shuffle=True)
     test_dataset = torchvision.datasets.ImageFolder(root='./data/test/', transform=transform)
-    test_loader = torch.utils.data.DataLoader(test_dataset)
+    test_loader = torch.utils.data.DataLoader(test_dataset, shuffle=False)
+
+    print(train_dataset.classes)
+    print(test_dataset.classes)
+    classes = train_dataset.classes
 
     """Device to train"""
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -84,6 +90,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
     """Main training steps"""
+    print('==== training ====')
     total_step = len(train_loader)
     loss_list = []
     acc_list = []
@@ -104,6 +111,7 @@ if __name__ == '__main__':
             correct = (predicted == labels).sum().item()
             acc_list.append(correct / total)
             if (i + 1) % 100 == 0:
+                print('At: ', classes[labels[0].item()])
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}, Accuracy: {:.2f}%'
                       .format(epoch + 1, num_epochs, i + 1, total_step, loss.item(), (correct / total) * 100))
 
@@ -112,3 +120,5 @@ if __name__ == '__main__':
 
     """Single image evaluation"""
     model_evaluate_single(model, './data/predict/img.jpg')
+    model_evaluate_single(model, './data/predict/img101.png')
+    model_evaluate_single(model, './data/predict/img292.png')
