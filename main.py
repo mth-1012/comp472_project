@@ -103,8 +103,6 @@ if __name__ == '__main__':
             _, predicted = torch.max(outputs.data, 1)
             correct = (predicted == labels).sum().item()
             acc_list.append(correct / total)
-            if loss.item() != 0:
-                print(labels)
             if (i + 1) % 100 == 0:
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}, Accuracy: {:.2f}%'
                       .format(epoch + 1, num_epochs, i + 1, total_step, loss.item(), (correct / total) * 100))
