@@ -63,13 +63,13 @@ if __name__ == '__main__':
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
             transforms.Resize(32),
-            transforms.CenterCrop(32),
+            transforms.CenterCrop(32)
         ])
 
     train_dataset = torchvision.datasets.ImageFolder(root='./data/train/', transform=transform)
-    train_loader = torch.utils.data.DataLoader(train_dataset, shuffle=True)
+    train_loader = torch.utils.data.DataLoader(train_dataset, shuffle=True, batch_size=6)
     test_dataset = torchvision.datasets.ImageFolder(root='./data/test/', transform=transform)
-    test_loader = torch.utils.data.DataLoader(test_dataset, shuffle=False)
+    test_loader = torch.utils.data.DataLoader(test_dataset)
 
     print(train_dataset.classes)
     print(test_dataset.classes)
