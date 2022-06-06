@@ -6,3 +6,4 @@ Members:
 - Thanh Ta (40085781)
 - Madline Nessim (40078034)
 - Lam Tran (40088195)
+- Hung Cai (40123967)
