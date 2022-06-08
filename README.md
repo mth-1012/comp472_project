@@ -7,3 +7,14 @@ Members:
 - Madline Nessim (40078034)
 - Lam Tran (40088195)
 - Hung Cai (40123967)
+
+
+The 3 main files are main.py, CNN.py and evaluator.py.
+
+main.py is where we load the dataset, transform it and then feed it to our model to train it. 
+CNN.py is the convolutional neural network model that studies and analyzes the dataset
+evaluator.py is the model evaluator, it runs over the test dataset and evaluates the model predictions.
+It also calculates the accuracy, precision, recall, and F1-measure and outputs the confusion matrix for each class.
+
+To run it the main.py usually has to run first then the evaluator.py but, since the main.py has been run before and
+the model is already built (model.pt) and restored, only the evaluator.py has to run on the testing dataset.
