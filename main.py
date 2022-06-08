@@ -1,5 +1,4 @@
 from torch.utils.data import DataLoader
-from PIL import Image
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
@@ -26,7 +25,7 @@ if __name__ == '__main__':
     print('AI Face Mask Detector')
 
     """Load dataset"""
-    num_epochs = 2
+    num_epochs = 10
     num_classes = 4
     learning_rate = 0.001
 
@@ -80,7 +79,7 @@ if __name__ == '__main__':
             correct = (predicted == labels).sum().item()
             acc_list.append(correct / total)
             if (i + 1) % 100 == 0:
-                print('At: ', classes[labels[0].item()])
+                # print('At: ', classes[labels[0].item()])
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}, Accuracy: {:.2f}%'
                       .format(epoch + 1, num_epochs, i + 1, total_step, loss.item(), (correct / total) * 100))
 
