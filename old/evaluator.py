@@ -5,13 +5,13 @@ import torch
 import torchvision.transforms as transforms
 import torchvision
 
-transform = transforms.Compose(
-        [
-            transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-            transforms.Resize(32),
-            transforms.CenterCrop(32)
-        ])
+# Transform functions
+transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        transforms.Resize(32),
+        transforms.CenterCrop(32)
+    ])
 
 
 def model_evaluate(model, test_set, device):
@@ -52,7 +52,7 @@ def model_evaluate_single(model, image_dir, transform, classes, device):
 
 
 def model_restore():
-    return torch.load('model.pt')
+    return torch.load('../model.pt')
 
 
 def evaluate(test_set):
@@ -68,12 +68,12 @@ def evaluate(test_set):
     model_evaluate(model, test_set, device)
 
     """Single image evaluation"""
-    model_evaluate_single(model, './data/predict/img.jpg', transform, classes=test_set.classes, device=device)
+    model_evaluate_single(model, '../data/predict/img.jpg', transform, classes=test_set.classes, device=device)
     # model_evaluate_single(model, './data/predict/img101.png')
     # model_evaluate_single(model, './data/predict/img292.png')
 
 
 if __name__ == '__main__':
     # Dataset for testing only
-    test_dataset = torchvision.datasets.ImageFolder(root='./data/test/', transform=transform)
+    test_dataset = torchvision.datasets.ImageFolder(root='../data/test/', transform=transform)
     evaluate(test_dataset)

@@ -3,29 +3,20 @@ import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 import torchvision
-import matplotlib.pyplot as plt
 import CNN as CNN
-import evaluator as evaluator
+from old import evaluator as evaluator
 
-transform = transforms.Compose(
-        [
-            transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-            transforms.Resize(32),
-            transforms.CenterCrop(32)
-        ])
-
-
-# def show_batch(data_loader):
-#     for images, labels in data_loader:
-#         fig, ax = plt.subplots(figsize=(8, 8))
-#         ax.set_xticks([])
-#         ax.set_yticks([])
-#         ax.imshow(torchvision.utils.make_grid(images[:32], nrow=8).permute(1, 2, 0))
+# Transform functions
+transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        transforms.Resize(32),
+        transforms.CenterCrop(32)
+    ])
 
 
 def model_save(model):
-    torch.save(model, 'model.pt')
+    torch.save(model, '../model.pt')
 
 
 # Press the green button in the gutter to run the script.
@@ -34,19 +25,15 @@ if __name__ == '__main__':
     print('AI Face Mask Detector')
 
     """Load dataset"""
-    num_epochs = 2
+    num_epochs = 10
     num_classes = 4
     learning_rate = 0.001
 
-    # Train
-    train_dataset = torchvision.datasets.ImageFolder(root='./data/train/', transform=transform)
+    # Dataset
+    train_dataset = torchvision.datasets.ImageFolder(root='../data/train/', transform=transform)
     train_loader = torch.utils.data.DataLoader(train_dataset, shuffle=True, batch_size=6)
-
-    # Test
-    test_dataset = torchvision.datasets.ImageFolder(root='./data/test/', transform=transform)
+    test_dataset = torchvision.datasets.ImageFolder(root='../data/test/', transform=transform)
     test_loader = torch.utils.data.DataLoader(test_dataset)
-
-    print(train_dataset.classes)
     classes = train_dataset.classes
 
     """Device to train"""
