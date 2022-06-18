@@ -79,4 +79,4 @@ if __name__ == '__main__':
     model_save(model)
 
     """Evaluate"""
-    evaluator.evaluate(test_dataset)
+    # evaluator.evaluate(test_dataset)

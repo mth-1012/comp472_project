@@ -12,11 +12,12 @@ transform = transforms.Compose([
         transforms.Resize(32),
         transforms.CenterCrop(32)
     ])
+classes = ['cloth', 'n95', 'none', 'surgical']
 
 
 def model_evaluate(model, test_set, device):
     test_loader = torch.utils.data.DataLoader(test_set)
-    classes = test_set.classes
+    # classes = test_set.classes
     print('==== evaluate ====')
     cm = numpy.zeros((4, 4))
     model.eval()
@@ -52,7 +53,7 @@ def model_evaluate_single(model, image_dir, transform, classes, device):
 
 
 def model_restore():
-    return torch.load('../model.pt')
+    return torch.load('./model.pt')
 
 
 def evaluate(test_set):
@@ -68,7 +69,7 @@ def evaluate(test_set):
     model_evaluate(model, test_set, device)
 
     """Single image evaluation"""
-    model_evaluate_single(model, '../data/predict/img.jpg', transform, classes=test_set.classes, device=device)
+    model_evaluate_single(model, '../data/predict/img.jpg', transform, classes, device=device)
     # model_evaluate_single(model, './data/predict/img101.png')
     # model_evaluate_single(model, './data/predict/img292.png')
 
