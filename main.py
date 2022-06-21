@@ -19,9 +19,7 @@ transform = transforms.Compose([
 
 def import_datasets():
     """Import datasets"""
-    dataset1 = torchvision.datasets.ImageFolder(root='./data/train/', transform=transform)
-    dataset2 = torchvision.datasets.ImageFolder(root='./data/test/', transform=transform)
-    dataset = torch.utils.data.ConcatDataset([dataset1, dataset2])
+    dataset = torchvision.datasets.ImageFolder(root='./data/dataset/', transform=transform)
 
     """Random split data"""
     m = len(dataset)
