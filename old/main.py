@@ -16,7 +16,7 @@ transform = transforms.Compose([
 
 
 def model_save(model):
-    torch.save(model, '../model.pt')
+    torch.save(model, 'model.pt')
 
 
 # Press the green button in the gutter to run the script.

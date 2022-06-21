@@ -25,7 +25,8 @@ def import_datasets():
 
     """Random split data"""
     m = len(dataset)
-    return random_split(dataset, [m - int(m / 4), int(m / 4)])
+    train, test = random_split(dataset, [m - int(m / 4), int(m / 4)])
+    return dataset, train, test
 
 
 if __name__ == '__main__':
@@ -33,22 +34,22 @@ if __name__ == '__main__':
     print('AI Face Mask Detector\n')
 
     # Hyper-parameters
-    num_epochs = 10
+    num_epochs = 7
     num_classes = 4
     learning_rate = 0.001
     classes = ('cloth', 'n95', 'none', 'surgical')
 
     """Import training dataset"""
-    train_dataset, _ = import_datasets()
+    _, train_dataset, _ = import_datasets()
 
-    """Device to train"""
-    # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    device = torch.device('cpu')
+    """Check device to train"""
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # device = torch.device('cpu')
 
     """Start training"""
     torch.manual_seed(0)
     net = NeuralNetClassifier(
-        CNN.CNN().to(device),
+        CNN.CNN(),
         max_epochs=num_epochs,
         lr=learning_rate,
         batch_size=100,
