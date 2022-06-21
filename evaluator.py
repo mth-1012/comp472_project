@@ -1,3 +1,4 @@
+import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 import CNN
@@ -24,6 +25,14 @@ def predict_eval(net, dataset):
     plt.show()
 
 
+def k_fold_cross_validation(net, dataset, k=5):
+    print('\n==== K-fold ====')
+    y_train = np.array([np.int64(y) for x, y in iter(train_dataset)])
+    train_sliceable = SliceDataset(dataset)
+    scores = cross_val_score(net, train_sliceable, y_train, cv=k, scoring='accuracy')
+    print('Scores: {}'.format(scores))
+
+
 if __name__ == '__main__':
     print('COMP 472 Project')
     print('Evaluator')
@@ -33,17 +42,16 @@ if __name__ == '__main__':
     device = torch.device('cpu')
 
     """Get random test dataset"""
-    _, test_dataset = import_datasets()
+    train_dataset, test_dataset = import_datasets()
 
     """Reload model"""
-    net_reload = NeuralNetClassifier(
-        CNN.CNN(),
-        optimizer=optim.Adam,
-        criterion=nn.CrossEntropyLoss,
-        device=device
-    )
-    net_reload.initialize()
-    net_reload.load_params(f_params='model_pkl.pkl')
+    with open('model-pkl.pkl', 'rb') as f:
+        net_reload = pickle.load(f)
+        print('\nModel loaded')
 
     """Predict"""
-    predict_eval(net_reload, test_dataset)
+    # predict_eval(net_reload, test_dataset)
+
+    """K-fold Cross-Validation"""
+    k_fold_cross_validation(net_reload, train_dataset, k=5)
+
