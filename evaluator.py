@@ -13,9 +13,9 @@ from main import import_datasets, transform
 def predict_eval(net, dataset):
     print('\n==== Predict ====')
     y_predict = net.predict(dataset)
-    y_test = np.array([y for x, y in iter(test_dataset)])
+    y_test = np.array([y for x, y in iter(dataset)])
     print('Accuracy: {}%'.format(round(accuracy_score(y_test, y_predict) * 100, 2)))
-    plot_confusion_matrix(net, test_dataset, y_test.reshape(-1, 1))
+    plot_confusion_matrix(net, dataset, y_test.reshape(-1, 1))
     plt.show()
 
 
@@ -39,11 +39,11 @@ if __name__ == '__main__':
     data, _, test_dataset = import_datasets()
 
     """Import bias datasets"""
-    male_dataset = torchvision.datasets.ImageFolder(root='./bias/gender/male/', transform=transform)
-    female_dataset = torchvision.datasets.ImageFolder(root='./bias/gender/female/', transform=transform)
-    child_dataset = torchvision.datasets.ImageFolder(root='./bias/age/child/', transform=transform)
-    adult_dataset = torchvision.datasets.ImageFolder(root='./bias/age/adult/', transform=transform)
-    senior_dataset = torchvision.datasets.ImageFolder(root='./bias/age/senior', transform=transform)
+    male_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/male/', transform=transform)
+    female_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/female/', transform=transform)
+    child_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/child/', transform=transform)
+    adult_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/adult/', transform=transform)
+    senior_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/senior', transform=transform)
 
     """Reload model"""
     with open('model-pkl.pkl', 'rb') as f:
@@ -52,6 +52,8 @@ if __name__ == '__main__':
 
     """Evaluate performance"""
     predict_eval(net_reload, test_dataset)
+    predict_eval(net_reload, male_dataset)
+    predict_eval(net_reload, female_dataset)
 
     """K-fold Cross-Validate"""
     k_fold_cross_validation(net_reload, data, k=5)
