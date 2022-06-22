@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import ConfusionMatrixDisplay
 from skorch.helper import SliceDataset
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
 
 transform = transforms.Compose([
     transforms.ToTensor(),
@@ -32,7 +32,7 @@ def k_fold_cross_validation(net, dataset, k=5):
     print('\n==== K-fold ====')
     y_train = np.array([np.int64(y) for x, y in iter(dataset)])
     train_sliceable = SliceDataset(dataset)
-    scores = cross_val_score(net, train_sliceable, y_train, cv=k, scoring='accuracy')
+    scores = cross_validate(net, train_sliceable, y_train, cv=k, scoring=['precision', 'recall', 'f1', 'accuracy'])
     print('Scores: {}'.format(scores))
 
 
