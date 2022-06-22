@@ -1,5 +1,4 @@
 import pickle
-import random
 import numpy as np
 import CNN
 import torch
@@ -9,6 +8,7 @@ import torchvision.datasets
 import torchvision.transforms as transforms
 from skorch import NeuralNetClassifier
 from torch.utils.data import random_split
+from evaluator import predict_eval
 
 transform = transforms.Compose([
     transforms.ToTensor(),
@@ -26,7 +26,7 @@ def import_datasets():
     """Random split data"""
     m = len(dataset)
     train, test = random_split(dataset, [m - int(m / 4), int(m / 4)])
-    return dataset, train, test
+    return train, test
 
 
 if __name__ == '__main__':
@@ -36,10 +36,10 @@ if __name__ == '__main__':
     # Hyper-parameters
     num_epochs = 10
     batch_size = 100
-    learning_rate = random.choice([1e-1, 1e-2, 1e-3, 1e-4, 1e-5])
+    learning_rate = 1e-3
 
     """Import training dataset"""
-    _, train_dataset, _ = import_datasets()
+    train_dataset, test_dataset = import_datasets()
 
     """Check device to train"""
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -63,3 +63,6 @@ if __name__ == '__main__':
     with open('model-pkl.pkl', 'wb') as f:
         pickle.dump(net, f)
     print('\nModel saved')
+
+    """Evaluate test dataset"""
+    predict_eval(net, test_dataset, 'Test (25%)')

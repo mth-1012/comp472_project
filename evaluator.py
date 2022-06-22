@@ -3,11 +3,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torchvision.datasets
+import torchvision.transforms as transforms
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import ConfusionMatrixDisplay
 from skorch.helper import SliceDataset
 from sklearn.model_selection import cross_val_score
-from main import import_datasets, transform, classes
+
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+    transforms.Resize(32),
+    transforms.CenterCrop(32),
+])
+classes = ('cloth', 'n95', 'none', 'surgical')
 
 
 def predict_eval(net, dataset, name):
@@ -30,14 +38,14 @@ def k_fold_cross_validation(net, dataset, k=5):
 
 if __name__ == '__main__':
     print('COMP 472 Project')
-    print('Evaluator')
+    print('Extra Evaluator')
 
     """Check device to evaluate"""
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     # device = torch.device('cpu')
 
     """Get datasets"""
-    data, _, test_dataset = import_datasets()
+    data = torchvision.datasets.ImageFolder(root='./data/dataset/', transform=transform)
 
     """Import bias datasets"""
     male_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/male/', transform=transform)
@@ -52,7 +60,6 @@ if __name__ == '__main__':
         print('\nModel loaded')
 
     """Evaluate performance"""
-    predict_eval(net_reload, test_dataset, 'Whole')
     predict_eval(net_reload, male_dataset, 'Male (Gender)')
     predict_eval(net_reload, female_dataset, 'Female (Gender)')
     predict_eval(net_reload, child_dataset, 'Child (Age)')
@@ -60,5 +67,4 @@ if __name__ == '__main__':
     predict_eval(net_reload, senior_dataset, 'Senior (Age)')
 
     """K-fold Cross-Validate"""
-    k_fold_cross_validation(net_reload, data, k=5)
-
+    k_fold_cross_validation(net_reload, data, k=10)
