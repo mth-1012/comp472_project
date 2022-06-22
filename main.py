@@ -15,6 +15,7 @@ transform = transforms.Compose([
     transforms.Resize(32),
     transforms.CenterCrop(32),
 ])
+classes = ('cloth', 'n95', 'none', 'surgical')
 
 
 def import_datasets():
@@ -35,7 +36,6 @@ if __name__ == '__main__':
     num_epochs = 7
     num_classes = 4
     learning_rate = 0.001
-    classes = ('cloth', 'n95', 'none', 'surgical')
 
     """Import training dataset"""
     _, train_dataset, _ = import_datasets()

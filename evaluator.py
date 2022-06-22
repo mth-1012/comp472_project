@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import plot_confusion_matrix
 from skorch.helper import SliceDataset
 from sklearn.model_selection import cross_val_score
-from main import import_datasets, transform
+from main import import_datasets, transform, classes
 
 
 def predict_eval(net, dataset, name):
@@ -15,7 +15,7 @@ def predict_eval(net, dataset, name):
     y_predict = net.predict(dataset)
     y_test = np.array([y for x, y in iter(dataset)])
     print('Accuracy: {}%'.format(round(accuracy_score(y_test, y_predict) * 100, 2)))
-    plot_confusion_matrix(net, dataset, y_test.reshape(-1, 1))
+    plot_confusion_matrix(net, dataset, y_test.reshape(-1, 1), display_labels=classes)
     plt.title('Confusion Matrix for {} Dataset'.format(name))
     plt.show()
 
