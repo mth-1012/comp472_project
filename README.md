@@ -9,7 +9,7 @@ Members:
 - Hung Cai (40123967)
 
 
-The 3 main files are main.py, CNN.py and evaluator.py and a folder called "old".
+There are 3 main files are main.py, CNN.py and evaluator.py and a folder called "old".
 
 The folder "old" contains the old versions of main.py and evaluator.py. 
 
