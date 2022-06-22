@@ -1,4 +1,5 @@
 import pickle
+import random
 import numpy as np
 import CNN
 import torch
@@ -33,9 +34,9 @@ if __name__ == '__main__':
     print('AI Face Mask Detector\n')
 
     # Hyper-parameters
-    num_epochs = 7
-    num_classes = 4
-    learning_rate = 0.001
+    num_epochs = 10
+    batch_size = 100
+    learning_rate = random.choice([1e-1, 1e-2, 1e-3, 1e-4, 1e-5])
 
     """Import training dataset"""
     _, train_dataset, _ = import_datasets()
@@ -50,7 +51,7 @@ if __name__ == '__main__':
         CNN.CNN(),
         max_epochs=num_epochs,
         lr=learning_rate,
-        batch_size=100,
+        batch_size=batch_size,
         optimizer=optim.Adam,
         criterion=nn.CrossEntropyLoss,
         device=device

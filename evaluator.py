@@ -56,7 +56,7 @@ if __name__ == '__main__':
     predict_eval(net_reload, male_dataset, 'Male (Gender)')
     predict_eval(net_reload, female_dataset, 'Female (Gender)')
     predict_eval(net_reload, child_dataset, 'Child (Age)')
-    predict_eval(net_reload, adult_dataset, 'Adult (Age')
+    predict_eval(net_reload, adult_dataset, 'Adult (Age)')
     predict_eval(net_reload, senior_dataset, 'Senior (Age)')
 
     """K-fold Cross-Validate"""
