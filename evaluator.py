@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torchvision.datasets
 import torchvision.transforms as transforms
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.metrics import ConfusionMatrixDisplay
 from skorch.helper import SliceDataset
 from sklearn.model_selection import cross_validate
@@ -30,10 +30,20 @@ def predict_eval(net, dataset, name):
 
 def k_fold_cross_validation(net, dataset, k=5):
     print('\n==== K-fold ====')
+    scoring = {
+        'accuracy': make_scorer(accuracy_score),
+        'precision': make_scorer(precision_score, average='weighted'),
+        'recall': make_scorer(recall_score, average='weighted'),
+        'f1_score': make_scorer(f1_score, average='weighted'),
+    }
     y_train = np.array([np.int64(y) for x, y in iter(dataset)])
     train_sliceable = SliceDataset(dataset)
-    scores = cross_validate(net, train_sliceable, y_train, cv=k, scoring=['precision', 'recall', 'f1', 'accuracy'])
-    print('Scores: {}'.format(scores))
+    scores = cross_validate(net, train_sliceable, y_train, cv=k, scoring=scoring)
+    print('\nScores:')
+    print('Accuracy: ', format(scores['test_accuracy']))
+    print('Precision: ', format(scores['test_precision']))
+    print('Recall: ', format(scores['test_recall']))
+    print('F1-measure: ', format(scores['test_f1_score']))
 
 
 if __name__ == '__main__':
@@ -60,11 +70,11 @@ if __name__ == '__main__':
         print('\nModel loaded')
 
     """Evaluate performance"""
-    predict_eval(net_reload, male_dataset, 'Male (Gender)')
-    predict_eval(net_reload, female_dataset, 'Female (Gender)')
-    predict_eval(net_reload, child_dataset, 'Child (Age)')
-    predict_eval(net_reload, adult_dataset, 'Adult (Age)')
-    predict_eval(net_reload, senior_dataset, 'Senior (Age)')
+    # predict_eval(net_reload, male_dataset, 'Male (Gender)')
+    # predict_eval(net_reload, female_dataset, 'Female (Gender)')
+    # predict_eval(net_reload, child_dataset, 'Child (Age)')
+    # predict_eval(net_reload, adult_dataset, 'Adult (Age)')
+    # predict_eval(net_reload, senior_dataset, 'Senior (Age)')
 
     """K-fold Cross-Validate"""
-    k_fold_cross_validation(net_reload, data, k=10)
+    # k_fold_cross_validation(net_reload, data, k=10)
