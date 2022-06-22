@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torchvision.datasets
 from sklearn.metrics import accuracy_score
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
 from skorch.helper import SliceDataset
 from sklearn.model_selection import cross_val_score
 from main import import_datasets, transform, classes
@@ -14,8 +14,8 @@ def predict_eval(net, dataset, name):
     print('\n==== Predict ====')
     y_predict = net.predict(dataset)
     y_test = np.array([y for x, y in iter(dataset)])
-    print('Accuracy: {}%'.format(round(accuracy_score(y_test, y_predict) * 100, 2)))
-    plot_confusion_matrix(net, dataset, y_test.reshape(-1, 1), display_labels=classes)
+    print('Accuracy for {} Dataset: {}%'.format(name, round(accuracy_score(y_test, y_predict) * 100, 2)))
+    ConfusionMatrixDisplay.from_predictions(y_test, y_predict, display_labels=classes)
     plt.title('Confusion Matrix for {} Dataset'.format(name))
     plt.show()
 
@@ -60,5 +60,5 @@ if __name__ == '__main__':
     predict_eval(net_reload, senior_dataset, 'Senior (Age)')
 
     """K-fold Cross-Validate"""
-    # k_fold_cross_validation(net_reload, data, k=5)
+    k_fold_cross_validation(net_reload, data, k=5)
 
