@@ -10,12 +10,13 @@ from sklearn.model_selection import cross_val_score
 from main import import_datasets, transform
 
 
-def predict_eval(net, dataset):
+def predict_eval(net, dataset, name):
     print('\n==== Predict ====')
     y_predict = net.predict(dataset)
     y_test = np.array([y for x, y in iter(dataset)])
     print('Accuracy: {}%'.format(round(accuracy_score(y_test, y_predict) * 100, 2)))
     plot_confusion_matrix(net, dataset, y_test.reshape(-1, 1))
+    plt.title('Confusion Matrix for {} Dataset'.format(name))
     plt.show()
 
 
@@ -51,10 +52,13 @@ if __name__ == '__main__':
         print('\nModel loaded')
 
     """Evaluate performance"""
-    predict_eval(net_reload, test_dataset)
-    predict_eval(net_reload, male_dataset)
-    predict_eval(net_reload, female_dataset)
+    predict_eval(net_reload, test_dataset, 'Whole')
+    predict_eval(net_reload, male_dataset, 'Male (Gender)')
+    predict_eval(net_reload, female_dataset, 'Female (Gender)')
+    predict_eval(net_reload, child_dataset, 'Child (Age)')
+    predict_eval(net_reload, adult_dataset, 'Adult (Age')
+    predict_eval(net_reload, senior_dataset, 'Senior (Age)')
 
     """K-fold Cross-Validate"""
-    k_fold_cross_validation(net_reload, data, k=5)
+    # k_fold_cross_validation(net_reload, data, k=5)
 
