@@ -20,19 +20,19 @@ single evaluation (to be added); bias evaluation is in the code but commented ou
 
 ## Libraries
 
-Create an Anaconda environment with Python 3.9 (**not the latest**)
+Create an Anaconda environment with Python 3.9.
 
 Using Anaconda, install the following before running.
 
     conda install pytorch torchvision torchaudio -c pytorch
 
-If you want to utilize cuda, install this.
+If you want to utilize cuda, install _cudatoolkit_.
 
     conda install cudatoolkit=11.0
 
-Continue to install the following tools.
+Continue to install _matplotlib_ for graph plotting and _scikit-learn_ wrapper.
 
-    pip install skorch matplotlib
+    pip install matplotlib skorch
 
 Make sure _jupyter notebook_ is installed before running the notebook file.
 
