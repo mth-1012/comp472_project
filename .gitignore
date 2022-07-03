@@ -4,4 +4,5 @@
 
 tensor.pt
 model.pt
+model.pkl
 model-pkl.pkl
