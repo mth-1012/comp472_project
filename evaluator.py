@@ -30,6 +30,7 @@ def predict_eval(net, dataset, name):
 
 def k_fold_cross_validation(net, dataset, k=5):
     print('\n==== K-fold ====')
+    print('Warning: This takes approximately an hour or more!')
     scoring = {
         'accuracy': make_scorer(accuracy_score),
         'precision': make_scorer(precision_score, average='weighted'),
@@ -65,7 +66,7 @@ if __name__ == '__main__':
     senior_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/senior', transform=transform)
 
     """Reload model"""
-    with open('model-pkl.pkl', 'rb') as f:
+    with open('model.pkl', 'rb') as f:
         net_reload = pickle.load(f)
         print('\nModel loaded')
 
@@ -77,4 +78,4 @@ if __name__ == '__main__':
     # predict_eval(net_reload, senior_dataset, 'Senior (Age)')
 
     """K-fold Cross-Validate"""
-    # k_fold_cross_validation(net_reload, data, k=10)
+    k_fold_cross_validation(net_reload, data, k=10)

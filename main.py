@@ -60,7 +60,7 @@ if __name__ == '__main__':
     net.fit(train_dataset, y=y_train)
 
     """Save model state_dict"""
-    with open('model-pkl.pkl', 'wb') as f:
+    with open('model.pkl', 'wb') as f:
         pickle.dump(net, f)
     print('\nModel saved')
 
