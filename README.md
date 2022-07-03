@@ -20,14 +20,19 @@ single evaluation (to be added); bias evaluation is in the code but commented ou
 
 ## Libraries
 
-Using Anaconda, install the following before running (note that _cudatoolkit_ is not 
-mandatory and can be omitted, it is around 625 MB)
+Create an Anaconda environment with Python 3.9 (**not the latest**)
 
-    conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
+Using Anaconda, install the following before running.
+
+    conda install pytorch torchvision torchaudio -c pytorch
+
+If you want to utilize cuda, install this.
+
+    conda install cudatoolkit=11.0
 
 Continue to install the following tools.
 
-    pip install skorch
+    pip install skorch matplotlib
 
 Make sure _jupyter notebook_ is installed before running the notebook file.
 
@@ -59,9 +64,11 @@ For further evaluation, run the evaluator.py with the IDE or in the console, ent
 
 ### Jupyter Notebook
 
-(to be updated)
+(to be updated, you know what to do anyway)
 
 ## Known Error
+
+### 1
 
 If the error 
 
@@ -73,3 +80,7 @@ is shown when running the evaluator.py, add
     os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 to the appropriate position in main.py.
+
+### 2
+
+SliceDataset is not working in the notebook. K-fold cross-validation is not usable.
