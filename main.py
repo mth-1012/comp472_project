@@ -54,7 +54,8 @@ if __name__ == '__main__':
         batch_size=batch_size,
         optimizer=optim.Adam,
         criterion=nn.CrossEntropyLoss,
-        device=device
+        device=device,
+        iterator_train__shuffle=True,
     )
     y_train = np.array([np.int64(y) for x, y in iter(train_dataset)])
     net.fit(train_dataset, y=y_train)
