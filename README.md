@@ -16,7 +16,7 @@ Part of the COMP 472 course at Concordia University
 **CNN.py** is the convolutional neural network model that studies and analyzes the dataset
 
 **evaluator.py** is where the evaluator functions are stored, including train/test split, k-fold cross-validation and
-single evaluation
+single evaluation (to be added); bias evaluation is in the code but commented out
 
 ## Libraries
 

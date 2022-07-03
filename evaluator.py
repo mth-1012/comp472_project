@@ -59,11 +59,11 @@ if __name__ == '__main__':
     data = torchvision.datasets.ImageFolder(root='./data/dataset/', transform=transform)
 
     """Import bias datasets"""
-    male_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/male/', transform=transform)
-    female_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/female/', transform=transform)
-    child_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/child/', transform=transform)
-    adult_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/adult/', transform=transform)
-    senior_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/senior', transform=transform)
+    # male_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/male/', transform=transform)
+    # female_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/female/', transform=transform)
+    # child_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/child/', transform=transform)
+    # adult_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/adult/', transform=transform)
+    # senior_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/senior', transform=transform)
 
     """Reload model"""
     with open('model.pkl', 'rb') as f:
