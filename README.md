@@ -20,13 +20,16 @@ single evaluation (to be added); bias evaluation is in the code but commented ou
 
 ## Libraries
 
-### Environment
+Using Anaconda, install the following before running (note that _cudatoolkit_ is not 
+mandatory and can be omitted, it is around 625 MB)
 
-(to be updated)
+    conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
 
-### Tools
+Continue to install the following tools.
 
-(to be updated)
+    pip install skorch
+
+Make sure _jupyter notebook_ is installed before running the notebook file.
 
 ## Previous version
 
@@ -64,7 +67,7 @@ If the error
 
     OMP: Error #15: Initializing libiomp5md.dll, but found mk2iomp5md.dll already initialized.
 
-shows when running the evaluator.py, add
+is shown when running the evaluator.py, add
 
     import os
     os.environ['KMP_DUPLICATE_LIB_OK']='True'
