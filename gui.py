@@ -112,29 +112,13 @@ if __name__ == '__main__':
                 pass
     """Check device to evaluate"""
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    # device = torch.device('cpu')
 
     """Get datasets"""
     data = torchvision.datasets.ImageFolder(root='./data/dataset/', transform=transform)
-
-    """Import bias datasets"""
-    # male_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/male/', transform=transform)
-    # female_dataset = torchvision.datasets.ImageFolder(root='./data/bias/gender/female/', transform=transform)
-    # child_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/child/', transform=transform)
-    # adult_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/adult/', transform=transform)
-    # senior_dataset = torchvision.datasets.ImageFolder(root='./data/bias/age/senior', transform=transform)
 
     """Reload model"""
     with open('model.pkl', 'rb') as f:
         net_reload = pickle.load(f)
         print('\nModel loaded')
 
-    # """Evaluate performance"""
-    # # predict_eval(net_reload, male_dataset, 'Male (Gender)')
-    # # predict_eval(net_reload, female_dataset, 'Female (Gender)')
-    # # predict_eval(net_reload, child_dataset, 'Child (Age)')
-    # # predict_eval(net_reload, adult_dataset, 'Adult (Age)')
-    # # predict_eval(net_reload, senior_dataset, 'Senior (Age)')
-    #
-    # """K-fold Cross-Validate"""
-    # k_fold_cross_validation(net_reload, data, k=10)
+
