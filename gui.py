@@ -14,6 +14,10 @@ transform = transforms.Compose([
 ])
 classes = ('cloth', 'n95', 'none', 'surgical')
 
+with open('model.pkl', 'rb') as f:
+    model = pickle.load(f)
+    print('\nModel loaded')
+
 
 def model_evaluate_single(model, image_dir):
     print('==== Single ====')
@@ -96,12 +100,13 @@ if __name__ == '__main__':
             except:
                 pass
 
-    print(filename)
+    window.close()
 
-    """Reload model"""
-    with open('model.pkl', 'rb') as f:
-        model = pickle.load(f)
-        print('\nModel loaded')
+    if not filename:
+        print('No file chosen!')
+        exit(0)
+
+    print(filename)
 
     # model_evaluate_single(model, filename)
     single_eval(model, filename)
