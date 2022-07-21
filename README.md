@@ -1,6 +1,6 @@
 # AI Face Mask Detection
 
-Part of the COMP 472 course at Concordia University
+A project for the COMP 472 course at Concordia University
 
 | Member | GitHub |
 |----------|--------------------|
@@ -8,6 +8,10 @@ Part of the COMP 472 course at Concordia University
 | Madline Nessim | [madeleine341](https://github.com/madeleine3341) |
 | Lam Tran | [linchen2508](https://github.com/linchen2508) |
 | Hung Cai | [Pro-vo-ker](https://github.com/Pro-vo-ker) |
+
+## Demo
+
+(soon)
 
 ## Files
 
@@ -66,7 +70,7 @@ For further evaluation, run the evaluator.py with the IDE or in the console, ent
 
 (to be updated, you know what to do anyway)
 
-## Known Error
+## Known Errors
 
 ### 1
 
